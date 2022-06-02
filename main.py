@@ -11,18 +11,17 @@ class Pessoas(object):
     def createArvoreGenealogicaPessoas(self):
         self.db.execute_query(
             "CREATE"
-            "(:Alien:ProjenitoraDoChakra{nome:'Kaguya Otsutsuki',clan:'Otsutsuki',poder:['Rinne-Sharingan,Byakugan']}),"
-            "(:Alien:SabioDosSeisCaminhos{nome:'Hagoromo Otsutsuki',clan:'Otsutsuki',poder:['Rinnegan','Sharingan']}),"
-            "(:Alien:AncestralClanHyuga{nome:'Hamura Otsutsuki',clan:'Otsutsuki',poder:['Tenseigan','Byakugan']}),"
-            "(:Ninja:AncestralClanUchiha{nome:'Indra Otsutsuki',clan:'Otsutsuki',poder:['Mangekyo Sharingan','Sharingan']}),"
-            "(:Ninja:AncestralClanSenju{nome:'Ashura Otsutsuki',clan:'Otsutsuki',poder:'Estilo Madeira'}),"
-            "(:Ninja:Medica{nome:'Sakura Haruno',clan:'Haruno',poder:'Byakugo no Jutsu'}),"
-            "(:Ninja:HokageDasSombras{nome:'Sasuke Uchiha',clan:'Uchiha',poder:['Rinnegan Supremo','Mangekyo Sharingan Eterno','Sharingan']}),"
-            "(:Ninja:Kunoichi{nome:'Sarada Uchiha',clan:['Uchiha','Haruno'],poder:'Sharingan'}),"
-            "(:Ninja:PrincesaDoByakugan{nome:'Hinata Hyuga',clan:'Hyuga',poder:'Byakugan'}),"
-            "(:Ninja:Hokage{nome:'Naruto Uzumaki',clan:'Uzumaki',poder:['Modo Kyubi','Modo Sabio','Modo Barion']}),"
-            "(:Ninja:Kunoichi{nome:'Himawari Uzumaki',clan:['Uzumaki','Hyuga'],poder:'Byakugan'}),"
-            "(:Ninja:Shinobi{nome:'Boruto Uzumaki',clan:['Uzumaki','Hyuga'],poder:['Karma','Jougan']})"
+            "(p:Person:Desenvolvedor {name:'Guilherme',genre:'M', age:26}),"
+            "(p0:Person:Execuiva {name:'Giulia',genre:'F', age:23}),"
+            "(p1:Person:Estudante {name:'Thiago',genre:'M', age:23}),"
+            "(p2:Person:Empreendedora {name:'Bel',genre:'F', age:49}),"
+            "(p3:Person:Jornalista {name:'Dinarte',genre:'M', age:58}),"
+            "(p4:Person:DonaCasa {name:'Wilma',genre:'F', age:65}),"
+            "(p5:Person:Mecanico {name:'Mauro',genre:'M', age:64}),"
+            "(p6:Person:Estudante {name:'Sophia',genre:'F', age:7}),"
+            "(p7:Person:Medico {name:'Helio',genre:'M', age:55}),"
+            "(p8:Person:Engenheira {name:'Keth',genre:'F', age:46}),"
+            "(p9:Person:Estudante {name:'Juju',genre:'F', age:11})"            
             )
 
     def createRelacionamento(self):
