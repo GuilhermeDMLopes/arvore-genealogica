@@ -5,9 +5,9 @@ from db.database import Graph
 
 class Pessoas(object):
     def __init__(self):
-        self.db = Graph(uri='bolt://34.239.104.135:7687',
+        self.db = Graph(uri='bolt://18.208.195.238:7687',
                         user='neo4j', password='countermeasures-cannon-chests')
-
+    '''
     def createArvoreGenealogicaPessoas(self):
         self.db.execute_query(
             "CREATE"
@@ -27,50 +27,67 @@ class Pessoas(object):
     def createRelacionamento(self):
         self.db.execute_query(
             "MATCH"
-            "(k:Alien:ProjenitoraDoChakra{nome:'Kaguya Otsutsuki'}),"
-            "(h1:Alien:SabioDosSeisCaminhos{nome:'Hagoromo Otsutsuki'}),"
-            "(h2:Alien:AncestralClanHyuga{nome:'Hamura Otsutsuki'}),"
-            "(i:Ninja:AncestralClanUchiha{nome:'Indra Otsutsuki'}),"
-            "(a:Ninja:AncestralClanSenju{nome:'Ashura Otsutsuki'}),"
-            "(s1:Ninja:Medica{nome:'Sakura Haruno'}),"
-            "(s2:Ninja:HokageDasSombras{nome:'Sasuke Uchiha'}),"
-            "(s3:Ninja:Kunoichi{nome:'Sarada Uchiha'}),"
-            "(h3:Ninja:PrincesaDoByakugan{nome:'Hinata Hyuga'}),"
-            "(n:Ninja:Hokage{nome:'Naruto Uzumaki'}),"
-            "(h4:Ninja:Kunoichi{nome:'Himawari Uzumaki'}),"
-            "(b:Ninja:Shinobi{nome:'Boruto Uzumaki'})"
+            "(p:Person{name:'Guilherme'}),(p0:Person{name:'Giulia'}),"
+            "(p:Person{name:'Guilherme'}),(p6:Person{name:'Sophia'}),"
+            "(p0:Person{name:'Giulia'}),(p6:Person{name:'Sophia'}),"
+            "(p:Person{name:'Guilherme'}),(p1:Person{name:'Thiago'}),"
+            "(p2:Person{name:'Bel'}),(p:Person{name:'Guilherme'}),"
+            "(p2:Person{name:'Bel'}),(p1:Person{name:'Thiago'}),"
+            "(p2:Person{name:'Bel'}),(p7:Person{name:'Helio'}),"
+            "(p3:Person{name:'Dinarte'}),(p:Person{name:'Guilherme'}),"
+            "(p3:Person{name:'Dinarte'}),(p1:Person{name:'Thiago'}),"
+            "(p2:Person{name:'Bel'}),(p8:Person{name:'Keth'}),"
+            "(p8:Person{name:'Keth'}),(p9:Person{name:'Juju'}),"
+            "(p4:Person{name:'Wilma'}),(p2:Person{name:'Bel'}),"
+            "(p4:Person{name:'Wilma'}),(p8:Person{name:'Keth'}),"
+            "(p4:Person{name:'Wilma'}),(p5:Person{name:'Mauro'}),"
+            "(p5:Person{name:'Mauro'}),(p8:Person{name:'Keth'}),"
+            "(p5:Person{name:'Mauro'}),(p2:Person{name:'Bel'})"
             "CREATE"
-            "(k)-[:MAE_DE]->(h1),(k)-[:MAE_DE]->(h2),"
-            "(h1)-[:PAI_DE]->(i),(h1)-[:PAI_DE]->(a),"
-            "(s1)-[:MAE_DE]->(s3),(s2)-[:PAI_DE]->(s3),"
-            "(h3)-[:MAE_DE]->(h4),(h3)-[:MAE_DE]->(b),(n)-[:PAI_DE]->(h4),(n)-[:PAI_DE]->(b),"
-            "(s1)-[:CASADA_COM]->(s2),(h3)-[:CASADA_COM]->(n),"
-            "(h1)-[:IRMAO_DE{tipo:'Gemeo'}]->(h2),(i)-[:IRMAO_DE]->(a),(h4)-[:IRMA_DE]->(b),"
-            "(n)-[:AMIGO_DE{tipo:'Equipe 7'}]->(s2),(n)-[:AMIGO_DE{tipo:'Equipe 7'}]->(s1),(s2)-[:AMIGO_DE{tipo:'Equipe 7'}]->(s1),"
-            "(s3)-[:AMIGA_DE]->(b),"
-            "(n)-[:DESCENDENTE_DE]->(a),(s2)-[:DESCENDENTE_DE]->(i),(h3)-[:DESCENDENTE_DE]->(h2)"
+            "(p)-[:CASADO_COM{desde:2017}]->(p0),"
+            "(p)-[:PAIS_DE]->(p6),"
+            "(p0)-[:PAIS_DE]->(p6),"
+            "(p)-[:IRMAO_DE]->(p1),"
+            "(p2)-[:PAIS_DE]->(p),"
+            "(p2)-[:PAIS_DE]->(p1),"
+            "(p2)-[:CASADO_COM{desde:2018}]->(p7),"
+            "(p3)-[:PAIS_DE]->(p),"
+            "(p3)-[:PAIS_DE]->(p1),"
+            "(p2)-[:IRMAO_DE]->(p8),"
+            "(p8)-[:PAIS_DE]->(p9),"
+            "(p4)-[:PAIS_DE]->(p2),"
+            "(p4)-[:PAIS_DE]->(p8),"
+            "(p4)-[:CASADO_COM{desde:1971}]->(p5),"
+            "(p5)-[:PAIS_DE]->(p8),"
+            "(p5)-[:PAIS_DE]->(p2)"
         )
-
+    '''
     def pergunta1(self):
-        return self.db.execute_query(
+        data = self.db.execute_query(
             "MATCH"
-            "(n:Alien)"
-            "RETURN n.nome"
+            " r=()-[p:CASADO_COM]->() WHERE p.desde = 2017 "
+            "RETURN r;"
         )
+        write_a_json(data,"Pergunta 1")
+        return data
 
     def pergunta2(self):
-        return self.db.execute_query(
+        data =  self.db.execute_query(
             "MATCH"
-            "(:Ninja:HokageDasSombras{nome:'Sasuke Uchiha'})-[:DESCENDENTE_DE]->(n)"
-            "RETURN n.nome"
+            " (p:Person:Desenvolvedor) "
+            "RETURN p;"
         )
+        write_a_json(data,"Pergunta 2")
+        return data
 
     def pergunta3(self):
-        return self.db.execute_query(
+        data = self.db.execute_query(
             "MATCH"
-            "(:Ninja:Hokage{nome:'Naruto Uzumaki'})-[:PAI_DE]->(n)"
-            "RETURN n.nome"
+            " (p:Person)-[:IRMAO_DE]->(p1:Person{name:'Thiago'}) "
+            "RETURN p;"
         )
+        write_a_json(data,"Pergunta 3")
+        return data
 
     def delete(self):
         self.db.execute_query("MATCH(n) DETACH DELETE n;")
@@ -79,25 +96,23 @@ def divider():
     print('\n' + '-' * 80 + '\n')
 
 p = Pessoas()
-p.delete()
-p.createArvoreGenealogicaNaruto()
-p.createRelacionamento()
+#p.delete()
+#p.createArvoreGenealogicaNaruto()
+#p.createRelacionamento()
 
 while 1:    
     option = input('Escolha uma pergunta!\n1. Quem esta casado desde 2017?\n2. Quem da familia é dev?\n3. Quem é o irmao de Thiago?\n4. sair\n\n')
 
-    if option == '1':
-        write_a_json(p.pergunta1(), "Perguta 1")
+    if option == '1':        
         pp(p.pergunta1())
         divider()
 
-    elif option == '2':
-        write_a_json(p.pergunta2(), "Perguta 2")
+    elif option == '2':        
         pp(p.pergunta2())
         divider()
 
     elif option == '3':
-        write_a_json(p.pergunta3(), "Perguta 3")
+        
         pp(p.pergunta3())
         divider()
 
